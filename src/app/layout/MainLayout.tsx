@@ -1,11 +1,5 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 export function MainLayout({ children }: { children: React.ReactNode }): React.ReactElement {
-  return (
-    <Fragment>
-      {/* <Header /> */}
-      <main className="h-full w-full">{children}</main>
-      {/* <Footer /> */}
-    </Fragment>
-  );
+  return <main className="h-full w-full">{children}</main>;
 }
