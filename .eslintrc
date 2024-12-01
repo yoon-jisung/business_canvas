@@ -1,0 +1,143 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@next/next/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "ignorePatterns": [
+    "node_modules/",
+    ".next/",
+    "public/",
+    "postcss.config.js",
+    "tailwind.config.js",
+    "next.config.mjs"
+  ],
+
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["@typescript-eslint", "react", "react-hooks", "jsx-a11y", "prettier", "import"],
+
+  "rules": {
+    //NOTE: TypeScript 관련 규칙
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "variableLike",
+        "format": ["camelCase"]
+      },
+      {
+        "selector": "variable",
+        "modifiers": ["const"],
+        "format": ["camelCase", "UPPER_CASE", "PascalCase"]
+      },
+      {
+        "selector": "function",
+        "format": ["camelCase", "PascalCase"]
+      },
+      {
+        "selector": "typeLike",
+        "format": ["PascalCase"]
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/prefer-optional-chain": "error", // 옵셔널 체이닝 사용 권장
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        //NOTE: 함수 반환 타입 명시 필수
+        "allowExpressions": true,
+        "allowTypedFunctionExpressions": true
+      }
+    ],
+
+    //NOTE: React 관련 규칙
+    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
+    "react-hooks/exhaustive-deps": "warn", // useEffect 의존성 배열 검사
+    "react-hooks/rules-of-hooks": "error", // Hooks 규칙 준수
+    "react/jsx-no-useless-fragment": "error", // 불필요한 Fragment 방지
+    "react/jsx-pascal-case": "error", // 컴포넌트 이름 PascalCase 강제
+    "react/jsx-no-bind": [
+      "error",
+      {
+        // 인라인 함수 생성 제한
+        "allowArrowFunctions": true,
+        "allowFunctions": false,
+        "allowBind": false
+      }
+    ],
+
+    //NOTE: 접근성 관련
+    "jsx-a11y/alt-text": "error", // 이미지 alt 텍스트 필수
+    "jsx-a11y/anchor-has-content": "error", // 앵커 태그 내용 필수
+    "jsx-a11y/click-events-have-key-events": "error", // 클릭 이벤트에 키보드 이벤트 필수
+
+    //NOTE: 코드 품질
+    "no-console": ["warn", { "allow": ["warn", "error"] }], // console.log 사용 제한
+    "no-debugger": "error", // debugger 사용 금지
+    "max-len": [
+      "error",
+      {
+        // 줄 길이 제한
+        "code": 100,
+        "ignoreComments": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true
+      }
+    ],
+    "no-duplicate-imports": "error", // 중복 import 방지
+    "eqeqeq": ["error", "always", { "null": "ignore" }],
+    "curly": ["error", "all"],
+    "quotes": ["error", "single"],
+
+    //NOTE: 성능 관련
+    "react/no-array-index-key": "error",
+
+    //NOTE: Import 관련 규칙
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin", // Node.js 내장 모듈 (fs, path 등)
+          "external", // 외부 라이브러리 (react, lodash 등)
+          "internal", // 내부 모듈
+          "parent", // 상위 디렉터리에서 가져오는 모듈
+          "sibling", // 동일한 디렉터리의 모듈
+          "index", // index 파일
+          "object" // TypeScript type imports (선택 사항)
+        ],
+        "newlines-between": "always", // 그룹 간 빈 줄 추가
+        "alphabetize": { "order": "asc", "caseInsensitive": true } // 알파벳 순 정렬, 대소문자 구분 없음
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {},
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    },
+    "react": {
+      "version": "detect"
+    }
+  }
+}

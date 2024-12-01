@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "streetsidesoftware.code-spell-checker",
+    "aaron-bond.better-comments",
+    "wix.vscode-import-cost",
+    "yoavbls.pretty-ts-errors",
+    "vitest.explorer",
+    "austenc.tailwind-docs",
+    "bradlc.vscode-tailwindcss"
+  ]
+}
