@@ -40,7 +40,8 @@
     "husky": "^8.0.3",
     "next": "14.2.18",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
