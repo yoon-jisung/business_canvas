@@ -5,22 +5,6 @@ import React from 'react';
 import '@/app/styles/main.css';
 import { MainLayout } from '@/app/layout';
 
-const montserrat = localFont({
-  src: [
-    {
-      path: './fonts/Montserrat-VariableFont_wght.ttf',
-      weight: '100 900',
-      style: 'normal'
-    },
-    {
-      path: './fonts/Montserrat-Italic-VariableFont_wght.ttf',
-      weight: '100 900',
-      style: 'italic'
-    }
-  ],
-  variable: '--font-montserrat'
-});
-
 const pretendard = localFont({
   src: [
     {
@@ -100,7 +84,7 @@ export default function RootLayout({
 }>): JSX.Element {
   return (
     <html lang="en">
-      <body className={`${montserrat.variable} ${pretendard.variable}`}>
+      <body className={`${pretendard.variable}`}>
         <MainLayout>{children}</MainLayout>
       </body>
     </html>

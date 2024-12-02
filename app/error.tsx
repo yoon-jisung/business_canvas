@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export function Error(): React.ReactElement {
+export default function Error(): React.ReactElement {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
       <h1 className="mb-4 text-2xl font-bold">오류가 발생했습니다</h1>

@@ -16,6 +16,4 @@ export type Record = {
   joinDate: string;
   job: JobType;
   emailSubscribed: boolean;
-  createdAt: string;
-  updatedAt: string;
 };

@@ -1,1 +1,2 @@
-// 버튼 클릭과 같은 유저의 인터렉션과 관련된 로직, 특정 비즈니스 로직이 담겨있는 레이어 입니다. 제품 전반에 걸처 재사용 되는 기능 구현체로, 사용자에게 실질적인 비즈니스 가치를 제공합니다.
+export * from './record/ui/RecordListUI';
+export * from './record/ui/RecordModal';
