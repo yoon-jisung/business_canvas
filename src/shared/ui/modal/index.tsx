@@ -40,13 +40,11 @@ export function Modal({ isOpen, onClose, children }: ModalProps): React.ReactEle
         aria-modal="true"
         role="dialog"
       >
-        {/* Backdrop */}
         <div
           className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
           onClick={onClose}
         />
 
-        {/* Modal Content */}
         <div
           className="relative z-50 w-full max-w-[520px] rounded-[10px] bg-white shadow-xl"
           onClick={(e) => e.stopPropagation()}
