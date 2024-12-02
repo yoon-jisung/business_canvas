@@ -1,23 +1,40 @@
+'use client';
+import dayjs from 'dayjs';
 import React, { useState } from 'react';
 
-import type { JobType, Record } from '@/entities/record';
+import type { JobType, RecordsType } from '@/entities/record';
 import { RecordFormField } from '@/feature/record/ui/RecordFormField';
+import { CustomDatePicker } from '@/shared/ui/date-picker';
 import { FormInput } from '@/shared/ui/form';
-type RecordFormProps = {
-  onSubmit: (data: Record) => void;
-  onCancel: () => void;
-};
+import { Select } from '@/shared/ui/select';
 
-export function RecordForm({ onSubmit, onCancel }: RecordFormProps): React.ReactElement {
-  const [formData, setFormData] = useState<Record>({
-    id: '',
-    name: '',
-    address: '',
-    memo: '',
-    joinDate: '',
-    job: 'defaultJobType' as JobType, // replace 'defaultJobType' with an appropriate default value of JobType
-    emailSubscribed: false
-  });
+type RecordFormProps = {
+  onSubmit: (data: RecordsType) => void;
+  onCancel: () => void;
+  initialData?: RecordsType;
+};
+const JOB_OPTIONS = [
+  { value: '개발자', label: '개발자' },
+  { value: 'PO', label: 'PO' },
+  { value: '디자이너', label: '디자이너' }
+];
+
+export function RecordForm({
+  onSubmit,
+  onCancel,
+  initialData
+}: RecordFormProps): React.ReactElement {
+  const [formData, setFormData] = useState<RecordsType>(
+    initialData || {
+      id: '',
+      name: '',
+      address: '',
+      memo: '',
+      joinDate: dayjs().format('YYYY-MM-DD'),
+      job: '개발자' as JobType,
+      emailSubscribed: false
+    }
+  );
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
     onSubmit(formData);
@@ -57,28 +74,40 @@ export function RecordForm({ onSubmit, onCancel }: RecordFormProps): React.React
         </RecordFormField>
 
         <RecordFormField id="joinDate" label="가입일" required>
-          <FormInput
-            type="date"
-            id="joinDate"
-            value={formData.joinDate}
-            onChange={(e) => setFormData((prev) => ({ ...prev, joinDate: e.target.value }))}
+          <CustomDatePicker
+            value={dayjs(formData.joinDate).toDate()}
+            onChange={(newDate) =>
+              setFormData((prev) => ({
+                ...prev,
+                joinDate: newDate
+                  ? dayjs(newDate).format('YYYY-MM-DD')
+                  : dayjs().format('YYYY-MM-DD')
+              }))
+            }
           />
         </RecordFormField>
 
         <RecordFormField id="job" label="직업">
-          <FormInput type="select" id="job" value={formData.job} />
-        </RecordFormField>
-
-        <RecordFormField id="email" label="이메일 수신 동의">
-          <input
-            type="checkbox"
-            id="email"
-            checked={formData.emailSubscribed}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, emailSubscribed: e.target.checked }))
+          <Select
+            options={JOB_OPTIONS}
+            value={formData.job}
+            onChange={(value: string) =>
+              setFormData((prev) => ({ ...prev, job: value as JobType }))
             }
-            className="h-4 w-4 border border-[#e3e3e3]"
           />
+        </RecordFormField>
+        <RecordFormField id="email" label="이메일 수신 동의">
+          <div className="flex items-center justify-start">
+            <input
+              type="checkbox"
+              id="email"
+              checked={formData.emailSubscribed}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, emailSubscribed: e.target.checked }))
+              }
+              className="h-4 w-4 rounded-lg border border-[#e3e3e3] bg-white"
+            />
+          </div>
         </RecordFormField>
       </div>
 
@@ -94,9 +123,13 @@ export function RecordForm({ onSubmit, onCancel }: RecordFormProps): React.React
         <button
           type="submit"
           disabled={!formData.name || !formData.joinDate}
-          className="flex h-8 items-center justify-center rounded-lg border border-[#e3e3e3] bg-black/5 px-4 text-sm font-normal leading-snug enabled:text-black/70 disabled:text-black/25"
+          className={`flex h-8 items-center justify-center rounded-lg px-4 text-sm font-normal leading-snug ${
+            formData.name && formData.joinDate
+              ? 'bg-[#4A7CFE] text-white hover:bg-[#739FFF]'
+              : 'border border-[#e3e3e3] bg-black/5 text-black/25'
+          }`}
         >
-          추가
+          저장
         </button>
       </div>
     </form>

@@ -1,37 +1,23 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
-import { Record } from '@/entities/record';
-import { useRecordStore } from '@/feature/record/model/modal.store';
+import { useFilteredRecords } from '@/feature/record/hooks/useFilteredRecords';
+import { useFilterStore } from '@/feature/record/model/filter.store';
+import { useRecordStore } from '@/feature/record/model/record.store';
 import { PlusIcon } from '@/shared/ui/icons';
-
-import { recordService } from '../model/record.service';
 
 import { RecordTable } from './RecordTable';
 
 export function RecordListUI(): React.ReactElement {
-  const [records, setRecords] = useState<Record[]>([]);
-  const { open } = useRecordStore();
+  const filters = useFilterStore((state) => state.filters);
+  const { records, loadRecords, open } = useRecordStore();
+
+  const filteredRecords = useFilteredRecords(records, filters);
+
   useEffect(() => {
     loadRecords();
-  }, []);
-
-  const loadRecords = async (): Promise<void> => {
-    const data = await recordService.getRecords();
-    setRecords(data);
-  };
-
-  const handleEdit = (record: Record): void => {
-    // TODO: 수정 기능 구현
-  };
-
-  const handleDelete = async (id: string): Promise<void> => {
-    if (window.confirm('정말 삭제하시겠습니까?')) {
-      await recordService.deleteRecord(id);
-      await loadRecords();
-    }
-  };
+  }, [loadRecords]);
 
   return (
     <div className="w-full">
@@ -48,7 +34,7 @@ export function RecordListUI(): React.ReactElement {
           <span>추가</span>
         </button>
       </div>
-      <RecordTable records={records} onEdit={handleEdit} onDelete={handleDelete} />
+      <RecordTable records={records} filteredRecords={filteredRecords} />
     </div>
   );
 }
