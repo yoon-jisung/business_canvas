@@ -1,12 +1,11 @@
-// src/features/record/model/record.service.ts
-import { Record } from '@/entities/record';
+import { RecordsType } from '@/entities/record';
 import { storage } from '@/shared/lib';
 
 import { INITIAL_RECORDS } from './constant';
 
 const STORAGE_KEY = 'records';
 
-type RecordKey = keyof Record;
+type RecordKey = keyof RecordsType;
 type FilterableFields = 'name' | 'address' | 'memo';
 
 class RecordService {
@@ -14,7 +13,7 @@ class RecordService {
     return ['name', 'address', 'memo'].includes(key);
   }
 
-  private async setRecords(records: Record[]): Promise<void> {
+  private async setRecords(records: RecordsType[]): Promise<void> {
     try {
       await storage.setItem(STORAGE_KEY, JSON.stringify(records));
     } catch (error) {
@@ -23,7 +22,7 @@ class RecordService {
     }
   }
 
-  async getRecords(): Promise<Record[]> {
+  async getRecords(): Promise<RecordsType[]> {
     try {
       const data = await storage.getItem(STORAGE_KEY);
       if (!data) {
@@ -37,14 +36,14 @@ class RecordService {
     }
   }
 
-  async createRecord(record: Omit<Record, 'id' | 'createdAt' | 'updatedAt'>): Promise<Record> {
+  async createRecord(
+    record: Omit<RecordsType, 'id' | 'createdAt' | 'updatedAt'>
+  ): Promise<RecordsType> {
     try {
       const records = await this.getRecords();
-      const newRecord: Record = {
+      const newRecord: RecordsType = {
         ...record,
-        id: crypto.randomUUID(),
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        id: crypto.randomUUID()
       };
 
       const updatedRecords = [...records, newRecord];
@@ -57,7 +56,7 @@ class RecordService {
     }
   }
 
-  async updateRecord(id: string, updates: Partial<Record>): Promise<Record> {
+  async updateRecord(id: string, updates: Partial<RecordsType>): Promise<RecordsType> {
     try {
       const records = await this.getRecords();
       const recordIndex = records.findIndex((record) => record.id === id);
@@ -93,7 +92,7 @@ class RecordService {
     }
   }
 
-  async filterRecords(filters: Partial<Record>): Promise<Record[]> {
+  async filterRecords(filters: Partial<RecordsType>): Promise<RecordsType[]> {
     try {
       const records = await this.getRecords();
       return records.filter((record) => {
