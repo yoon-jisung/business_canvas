@@ -1,6 +1,6 @@
-import { Record } from '@/entities/record';
+import { RecordsType } from '@/entities/record';
 
-export const INITIAL_RECORDS: Record[] = [
+export const INITIAL_RECORDS: RecordsType[] = [
   {
     id: '1',
     name: 'John Doe',
@@ -8,9 +8,7 @@ export const INITIAL_RECORDS: Record[] = [
     memo: '외국인',
     joinDate: '2024-10-02',
     job: '개발자',
-    emailSubscribed: true,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    emailSubscribed: true
   },
   {
     id: '2',
@@ -19,8 +17,6 @@ export const INITIAL_RECORDS: Record[] = [
     memo: '한국인',
     joinDate: '2024-10-01',
     job: 'PO',
-    emailSubscribed: false,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    emailSubscribed: false
   }
 ];
