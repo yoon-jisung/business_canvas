@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 
-import { Record } from './record.types';
+import { RecordsType } from './record.types';
 
-type RecordState = {
-  records: Record[];
-  setRecords: (records: Record[]) => void;
-  addRecord: (record: Record) => void;
-  updateRecord: (id: string, record: Partial<Record>) => void;
+export type RecordState = {
+  records: RecordsType[];
+  setRecords: (records: RecordsType[]) => void;
+  addRecord: (record: RecordsType) => void;
+  updateRecord: (id: string, record: Partial<RecordsType>) => void;
   deleteRecord: (id: string) => void;
 };
 

@@ -5,11 +5,11 @@ export type Field = {
   type: FieldType;
   label: string;
   required: boolean;
-  options?: string[]; // select 타입일 경우 사용
+  options?: string[];
 };
 
-export type Record = {
-  id: string; // 고유 식별자
+export type RecordsType = {
+  id: string;
   name: string;
   address?: string;
   memo?: string;
